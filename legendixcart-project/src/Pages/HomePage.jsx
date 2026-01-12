@@ -5,6 +5,7 @@ import './Header.css'
 export function HomePage() {
     return (
         <>
+            <title> Legendix Cart</title>
 
             <div className="header">
                 <div className="left-section">
