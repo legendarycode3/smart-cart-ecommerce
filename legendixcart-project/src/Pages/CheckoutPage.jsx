@@ -7,7 +7,10 @@ import { Link } from 'react-router-dom';
 export function CheckoutPage() {
     return (
         <>
+        <link rel="icon" type="image/cart-favicon" href="/cart-favicon.png" />
+
         <title>Checkout</title>
+        
         <div className="checkout-header">
             <div className="header-content">
                 <div className="checkout-header-left-section">

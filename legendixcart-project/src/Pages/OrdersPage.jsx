@@ -8,6 +8,8 @@ import './OrdersPage.css';
 export function OrdersPage() {
   return (
     <>
+      <link rel="icon" type="image/orders-favicon" href="/orders-favicon.png" />
+
       <title>Orders</title>
 
       <div className="header">

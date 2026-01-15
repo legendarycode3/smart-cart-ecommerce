@@ -8,6 +8,8 @@ import './Header.css'
 export function HomePage() {
     return (
         <>
+            <link rel="icon" type="image/home-favicon" href="/home-favicon.png" />
+
             <title> Legendix Cart</title>
 
             <div className="header">
