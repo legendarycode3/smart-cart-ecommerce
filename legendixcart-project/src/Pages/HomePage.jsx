@@ -6,6 +6,41 @@ import "./HomePage.css";
 import "./Header.css";
 
 export function HomePage() {
+    /**
+     * APPLYING "DATA FETCHING" BY PUTING THE URL & ALSO USING IT WITH A fetch() FUNCTION
+     */
+    const URL = "http://localhost:3000/api/products"
+
+    fetch(`${URL}`)
+      .then((res) => {
+        //console.log(res)
+        res.json().then((data) => {
+          console.log(data);
+        });
+      })
+
+      
+      /*
+      fetch(`${URL}`)
+        .then((res) => {
+          //console.log(res)
+          return res.json()
+        })
+        .then((data) => {
+            console.log(data);
+          });
+      */
+
+    /*
+    const fetchData = async () => {
+        const res = await fetch(`${URL}`);
+        const apiData = await res.json();
+        console.log(apiData);
+      };
+
+      fetchData();
+    */
+
   return (
     <>
       <link rel="icon" type="image/home-favicon" href="/home-favicon.png" />
