@@ -1,34 +1,64 @@
 import { Link } from "react-router-dom";
 
-import { products } from "../../starting-code/data/products";
+//import { products } from "../../starting-code/data/products";
+
+import axios from 'axios';
 
 import "./HomePage.css";
 import "./Header.css";
+import { useEffect , useState } from "react";
 
 export function HomePage() {
     /**
      * APPLYING "DATA FETCHING" BY PUTING THE URL & ALSO USING IT WITH A fetch() FUNCTION
      */
-    const URL = "http://localhost:3000/api/products"
 
-    fetch(`${URL}`)
-      .then((res) => {
-        //console.log(res)
-        res.json().then((data) => {
-          console.log(data);
-        });
-      })
+    const [products, setProducts] = useState([]);
 
+    const URL = 'http://localhost:3000/api/products'
+
+
+
+    useEffect(() => {
       
+      // fetch(`${URL}`)
+      //   .then((res) => {
+      //     //console.log(res)
+      //     return res.json();
+      //   })
+      //   .then((data) => {
+      //       //console.log(data);
+      //       setProducts(data);
+      //     });fetch(`${URL}`)
+
+        axios.get(`${URL}`)
+          .then((res) => {
+            console.log(res.data)
+            setProducts(res.data);
+          })
+
+    }, [])
+
+
+
+      // axios.get('http://localhost:3000/api/products')
+      //       .then((response) => {
+      //         console.log(response.data);
+      //         setProducts(response.data)
+      //       });
+
+
       /*
-      fetch(`${URL}`)
+          fetch(`${URL}`)
         .then((res) => {
           //console.log(res)
-          return res.json()
-        })
-        .then((data) => {
-            console.log(data);
+          res.json().then((data) => {
+            //console.log(data);
+            setProducts(data.message
+
+            );
           });
+        })
       */
 
     /*
@@ -36,6 +66,7 @@ export function HomePage() {
         const res = await fetch(`${URL}`);
         const apiData = await res.json();
         console.log(apiData);
+        setProducts(apiData);
       };
 
       fetchData();
