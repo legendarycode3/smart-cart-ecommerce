@@ -10,6 +10,8 @@ import "./HomePage.css";
 import { Header } from "../components/Header";
 import { useEffect , useState } from "react";
 
+// import { formatMoney } from '../utils/money';
+
 
 
 export function HomePage({cart}) {
