@@ -5,7 +5,9 @@ import { Link } from "react-router-dom";
 import axios from 'axios';
 
 import "./HomePage.css";
-import "./Header.css";
+// import "./Header.css";
+
+import { Header } from "../components/Header";
 import { useEffect , useState } from "react";
 
 export function HomePage() {
@@ -15,26 +17,43 @@ export function HomePage() {
 
     const [products, setProducts] = useState([]);
 
+    const [cart , setCart] = useState([]);
+
+    
     const URL = 'http://localhost:3000/api/products'
+
+    const cartDataURL = 'http://localhost:3000/api/cart-items'
+
 
 
 
     useEffect(() => {
       
-      // fetch(`${URL}`)
-      //   .then((res) => {
-      //     //console.log(res)
-      //     return res.json();
-      //   })
-      //   .then((data) => {
-      //       //console.log(data);
-      //       setProducts(data);
-      //     });fetch(`${URL}`)
+      //FOR GETTING  THE PRODUCT DATA FROM THE BACKEND 
+      /*
+      fetch(`${URL}`)
+        .then((res) => {
+          //console.log(res)
+          return res.json();
+        })
+        .then((data) => {
+            //console.log(data);
+            setProducts(data);
+          });fetch(`${URL}`)
+      */
 
         axios.get(`${URL}`)
           .then((res) => {
             console.log(res.data)
             setProducts(res.data);
+          })
+
+
+      //FOR GETTING  THE "CART DATA" FROM THE BACKEND 
+        axios.get(`${cartDataURL}`)
+          .then((res) => {
+            console.log(res.data)
+            setCart(res.data);
           })
 
     }, [])
@@ -72,40 +91,17 @@ export function HomePage() {
       fetchData();
     */
 
+    
   return (
     <>
       <link rel="icon" type="image/home-favicon" href="/home-favicon.png" />
 
       <title> Legendix Cart</title>
 
-      <div className="header">
-        <div className="left-section">
-          <Link to="/" className="header-link">
-            <img className="logo" src="images/logo-white.png" />
-            <img className="mobile-logo" src="images/mobile-logo-white.png" />
-          </Link>
-        </div>
+      <Header cart={cart} />
+     
 
-        <div className="middle-section">
-          <input className="search-bar" type="text" placeholder="Search" />
 
-          <button className="search-button">
-            <img className="search-icon" src="images/icons/search-icon.png" />
-          </button>
-        </div>
-
-        <div className="right-section">
-          <Link className="orders-link header-link" to="/orders">
-            <span className="orders-text">Orders</span>
-          </Link>
-
-          <Link className="cart-link header-link" to="/checkout">
-            <img className="cart-icon" src="images/icons/cart-icon.png" />
-            <div className="cart-quantity">3</div>
-            <div className="cart-text">Cart</div>
-          </Link>
-        </div>
-      </div>
 
       <div className="home-page">
         <div className="products-grid">
