@@ -10,19 +10,22 @@ import "./HomePage.css";
 import { Header } from "../components/Header";
 import { useEffect , useState } from "react";
 
-export function HomePage() {
+
+
+export function HomePage({cart}) {
     /**
      * APPLYING "DATA FETCHING" BY PUTING THE URL & ALSO USING IT WITH A fetch() FUNCTION
      */
 
     const [products, setProducts] = useState([]);
 
-    const [cart , setCart] = useState([]);
+
+    // const [cart , setCart] = useState([]);
 
     
     const URL = 'http://localhost:3000/api/products'
 
-    const cartDataURL = 'http://localhost:3000/api/cart-items'
+    //const cartDataURL = 'http://localhost:3000/api/cart-items'
 
 
 
@@ -50,11 +53,13 @@ export function HomePage() {
 
 
       //FOR GETTING  THE "CART DATA" FROM THE BACKEND 
+      /*
         axios.get(`${cartDataURL}`)
           .then((res) => {
             console.log(res.data)
             setCart(res.data);
           })
+        */
 
     }, [])
 
