@@ -25,7 +25,7 @@ export function HomePage({cart}) {
     // const [cart , setCart] = useState([]);
 
     
-    const URL = 'http://localhost:3000/api/products'
+    const URL = 'http://localhost:3000/api/products?expand=estimatedDelivery'
 
     //const cartDataURL = 'http://localhost:3000/api/cart-items'
 

@@ -1,15 +1,20 @@
 import { Link } from "react-router-dom";
 
-import "./CheckoutPage.css";
-import "./Checkout-Header.css";
+import axios from "axios";
+
+import dayjs from "dayjs";
+
+import { useEffect, useState } from "react";
 // import { formatMoney } from '../utils/money';
 
+import "./CheckoutPage.css";
+import "./Checkout-Header.css";
+import { formatMoney } from "../utils/money";
 
 export function CheckoutPage({ cart }) {
-
-    /**
-     * USING THE LIFTED STATE "cart" WHICH CAN BE ACCESSED IN ALL PAGES , INSTEAD OF USEING THE AND WRITTING THE axios.get HTTP REQUEST AGAIN
-     */
+  /**
+   * USING THE LIFTED STATE "cart" WHICH CAN BE ACCESSED IN ALL PAGES , INSTEAD OF USEING THE AND WRITTING THE axios.get HTTP REQUEST AGAIN
+   */
   //   const [cart, setCart] = useState([]);
 
   //   const cartDataURL = "http://localhost:3000/api/cart-items";
@@ -20,6 +25,20 @@ export function CheckoutPage({ cart }) {
   //       setCart(res.data);
   //     });
   //   }, []);
+
+   const [deliveryOptions, setDeliveryOptions] = useState([]);
+
+  const URL =
+    "http://localhost:3000/api/delivery-options?expand=estimatedDeliveryTime";
+
+  useEffect(() => {
+    axios.get(`${URL}`)
+      .then((res) => {
+      // USED .then , TO WAIT FOR THE RESPONSE TO COME BACK, SO THAT ONCE WE GET THE RESPONSE , THEN WE KNOW SAVE IT ON THE "deliveryOptions" WHICH IS THE INITIAL FUNCTIOn
+      // console.log(res.data);
+      setDeliveryOptions(res.data);
+    });
+  }, []);
 
   return (
     <>
@@ -54,14 +73,22 @@ export function CheckoutPage({ cart }) {
         <div className="page-title">Review your order</div>
 
         <div className="checkout-grid">
-
           <div className="order-summary">
-            {cart.map((cartItem) => {
+            {deliveryOptions.length > 0 && cart.map((cartItem) => {
+
+              const selectedDeliveryOption = deliveryOptions
+                .find((deliveryOption) => {
+                  return deliveryOption.id === cartItem.deliveryOptionId;
+                }
+              );
 
               return (
                 <div key={cartItem.productId} className="cart-item-container">
                   <div className="delivery-date">
-                    Delivery date: Wednesday, June 15
+                    
+                      Delivery date:  {dayjs(
+                      selectedDeliveryOption.estimatedDeliveryTimeMs
+                      ).format('dddd, MMMM D')}
                   </div>
 
                   <div className="cart-item-details-grid">
@@ -72,14 +99,15 @@ export function CheckoutPage({ cart }) {
 
                     <div className="cart-item-details">
                       <div className="product-name">
-                       {cartItem.product.name}
+                        {cartItem.product.name}
                       </div>
-                      <div className="product-price"> 
+                      <div className="product-price">
                         ${(cartItem.product.priceCents / 100).toFixed(2)}
                       </div>
                       <div className="product-quantity">
                         <span>
-                          Quantity: <span className="quantity-label">
+                          Quantity:{" "}
+                          <span className="quantity-label">
                             {cartItem.quantity}
                           </span>
                         </span>
@@ -92,57 +120,44 @@ export function CheckoutPage({ cart }) {
                       </div>
                     </div>
 
+
+
                     <div className="delivery-options">
                       <div className="delivery-options-title">
                         Choose a delivery option:
                       </div>
 
-                      <div className="delivery-option">
-                        <input
-                          type="radio"
-                          className="delivery-option-input"
-                          name="delivery-option-2"
-                        />
-                        <div>
-                          <div className="delivery-option-date">
-                            Tuesday, June 21
+                      {deliveryOptions.map((deliveryOption) => {
+                        let priceString = "Free Shipping";
+                        if (deliveryOption.priceCents > 0) {
+                          priceString = `${formatMoney(deliveryOption.priceCents)} - Shipping`;
+                        }
+                        return (
+                          <div
+                            key={deliveryOption.id}
+                            className="delivery-option"
+                          >
+                            <input
+                              type="radio"
+                              checked={
+                                deliveryOption.id === cartItem.deliveryOptionId
+                              }
+                              className="delivery-option-input"
+                              name={`delivery-option-${cartItem.productId}`}
+                            />
+                            <div>
+                              <div className="delivery-option-date">
+                                {dayjs(
+                                  deliveryOption.estimatedDeliveryTimeMs,
+                                ).format("dddd, MMMM D")}
+                              </div>
+                              <div className="delivery-option-price">
+                                {priceString}
+                              </div>
+                            </div>
                           </div>
-                          <div className="delivery-option-price">
-                            FREE Shipping
-                          </div>
-                        </div>
-                      </div>
-                      <div className="delivery-option">
-                        <input
-                          type="radio"
-                          checked
-                          className="delivery-option-input"
-                          name="delivery-option-2"
-                        />
-                        <div>
-                          <div className="delivery-option-date">
-                            Wednesday, June 15
-                          </div>
-                          <div className="delivery-option-price">
-                            $4.99 - Shipping
-                          </div>
-                        </div>
-                      </div>
-                      <div className="delivery-option">
-                        <input
-                          type="radio"
-                          className="delivery-option-input"
-                          name="delivery-option-2"
-                        />
-                        <div>
-                          <div className="delivery-option-date">
-                            Monday, June 13
-                          </div>
-                          <div className="delivery-option-price">
-                            $9.99 - Shipping
-                          </div>
-                        </div>
-                      </div>
+                        );
+                      })}
                     </div>
                   </div>
                 </div>
@@ -155,7 +170,7 @@ export function CheckoutPage({ cart }) {
 
             <div className="payment-summary-row">
               <div>Items (3):</div>
-              <div className="payment-summary-money">$42.75</div>
+              <div className="payment-summary-money">{}</div>
             </div>
 
             <div className="payment-summary-row">
