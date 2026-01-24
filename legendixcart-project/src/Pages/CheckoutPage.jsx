@@ -184,35 +184,35 @@ export function CheckoutPage({ cart }) {
                 <div className="payment-summary-row">
                   <div>Items ({paymentSummarys.totalItems}):</div>
                   <div className="payment-summary-money">
-                    ${formatMoney(paymentSummarys.productCostCents)}
+                    {formatMoney(paymentSummarys.productCostCents)}
                   </div>
                 </div>
 
                 <div className="payment-summary-row">
                   <div>Shipping &amp; handling:</div>
                   <div className="payment-summary-money">
-                    ${formatMoney(paymentSummarys.shippingCostCents)}
+                    {formatMoney(paymentSummarys.shippingCostCents)}
                   </div>
                 </div>
 
                 <div className="payment-summary-row subtotal-row">
                   <div>Total before tax:</div>
                   <div className="payment-summary-money">
-                    ${formatMoney(paymentSummarys.totalCostBeforeTaxCents)}
+                    {formatMoney(paymentSummarys.totalCostBeforeTaxCents)}
                   </div>
                 </div>
 
                 <div className="payment-summary-row">
                   <div>Estimated tax (10%):</div>
                   <div className="payment-summary-money">
-                    ${paymentSummarys.taxCents}
+                    {paymentSummarys.taxCents}
                   </div>
                 </div>
 
                 <div className="payment-summary-row total-row">
                   <div>Order total:</div>
                   <div className="payment-summary-money">
-                    ${formatMoney(paymentSummarys.totalCostCents)}
+                    {formatMoney(paymentSummarys.totalCostCents)}
                   </div>
                 </div>
 
