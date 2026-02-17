@@ -44,10 +44,19 @@ export function CheckoutPage({ cart }) {
   const [paymentSummarys, setPaymentSummarys] = useState(null);
 
   useEffect(() => {
-    axios.get(`${paymentSummaryURL}`).then((res) => {
+    axios.get(`${paymentSummaryURL}`)
+      .then((res) => {
       setPaymentSummarys(res.data);
     });
   });
+
+
+
+  let totalQuantity = 0;
+
+  cart.forEach((cartItem) => {
+    totalQuantity += cartItem.quantity;
+  })
 
   return (
     <>
@@ -67,7 +76,7 @@ export function CheckoutPage({ cart }) {
           <div className="checkout-header-middle-section">
             Checkout (
             <Link className="return-to-home-link" to="/">
-              3 items
+              {totalQuantity} items
             </Link>
             )
           </div>

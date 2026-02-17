@@ -14,7 +14,7 @@ import "./App.css";
 
 function App() {
   const [cart, setCart] = useState([]);
-
+ 
   const cartDataURL = "http://localhost:3000/api/cart-items?expand=product";
 
   useEffect(() => {

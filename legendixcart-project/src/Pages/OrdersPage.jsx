@@ -17,11 +17,22 @@ export function OrdersPage({ cart }) {
 
   const URL = "http://localhost:3000/api/orders?expand=products";
 
+  // useEffect(() => {
+  //   axios.get(`${URL}`).then((response) => {
+  //     setOrders(response.data);
+  //   });
+  // }, []);
+
   useEffect(() => {
-    axios.get(`${URL}`).then((response) => {
+
+    const getOrdersData = async() => {
+      const response = await axios.get(`${URL}`)
       setOrders(response.data);
-    });
+    };
+    
+    getOrdersData();
   }, []);
+
 
   return (
     <>
