@@ -11,17 +11,18 @@ import { NavLink } from "react-router-dom";
 // NOW USING IT AGAIN
 import "./Header.css";
 
-export function Header({cart}) {
+export function Header() {
 
   /**
    * CALCULATING THE TOTALL QUANTITY IN Cart
    * - AND ASSIGN THE VALUE TO THE "totalQuantity"- TO USE "CART DATA" FROM THE BACKEND INSTEAD OF PLAIN HTML .... WHICH WILL BE DISPLAYED ON THE  cartQuantity
    */
-  let totalQuantity = 0;
+//  let totalQuantity = 0;
 
-  cart.forEach((cartItem) => {
-    totalQuantity += cartItem.quantity; 
-  });
+//   cart?.forEach((cartItem) => {
+//     totalQuantity += cartItem.quantity; 
+//   });
+  
 
   return (
     <div className="header">
@@ -48,7 +49,7 @@ export function Header({cart}) {
 
         <NavLink className="cart-link header-link" to="/checkout">
           <img className="cart-icon" src="images/icons/cart-icon.png" />
-          <div className="cart-quantity"> {totalQuantity} </div>
+          <div className="cart-quantity"> 3 </div>
           <div className="cart-text">Cart</div>
         </NavLink>
       </div>

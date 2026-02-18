@@ -1,5 +1,9 @@
- import { Link } from 'react-router-dom';
+//  import { Link } from 'react-router-dom';
+
+import { Header } from "../components/Header";
+
 // import './Header.css'
+Header
 
 export function NotFoundPage() {
   return (

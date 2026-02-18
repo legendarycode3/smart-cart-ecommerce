@@ -75,9 +75,9 @@ export function CheckoutPage({ cart }) {
 
           <div className="checkout-header-middle-section">
             Checkout (
-            <Link className="return-to-home-link" to="/">
+            <a className="return-to-home-link" href="/">
               {totalQuantity} items
-            </Link>
+            </a>
             )
           </div>
 
