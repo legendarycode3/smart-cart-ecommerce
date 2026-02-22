@@ -3,12 +3,11 @@
 import { Header } from "../components/Header";
 
 // import './Header.css'
-Header
 
-export function NotFoundPage() {
+export function NotFoundPage({cart}) {
   return (
     <>
-      <Header />
+      <Header cart={cart} />
 
       <h1>404 - Page Not Found</h1>
 
