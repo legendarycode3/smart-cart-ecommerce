@@ -13,21 +13,35 @@ import { NotFoundPage } from "./Pages/NotFoundPage.jsx";
 import "./App.css";
 
 function App() {
-  const [cart, setCart] = useState([]);
- 
-  const cartDataURL = "http://localhost:3000/api/cart-items?expand=product";
+  
+    const [cart, setCart] = useState([]);
 
-  useEffect(() => {
-    axios.get(`${cartDataURL}`).then((res) => {
-      console.log(res.data);
-      setCart(res.data);
-    });
-  }, []);
+  // const cartDataURL = "http://localhost:3000/api/cart-items?expand=product";
+
+  // useEffect(() => {
+  //   axios.get(`${cartDataURL}`).then((res) => {
+  //     console.log(res.data);
+  //     setCart(res.data);
+  //   });
+  // }, []);
+
 
   
+  useEffect(() => {
+      const loadCart = async () => {
+    const res = await axios.get("http://localhost:3000/api/cart-items?expand=product")
+    setCart(res.data);
+  };
+
+    loadCart();
+  }, [])
+
+  
+
+
   return (
     <Routes>
-      <Route path="/" element={<HomePage cart={cart} />}>
+      <Route path="/" element={<HomePage cart={cart}  />}>
         {" "}
       </Route>
       <Route path="checkout" element={<CheckoutPage cart={cart} />}>
@@ -36,7 +50,10 @@ function App() {
       <Route path="orders" element={<OrdersPage cart={cart} />}>
         {" "}
       </Route>
-      <Route path="tracking/:orderId/:productId" element={<TrackingPage cart={cart}  />}>
+      <Route
+        path="tracking/:orderId/:productId"
+        element={<TrackingPage cart={cart} />}
+      >
         {" "}
       </Route>
       <Route path="*" element={<NotFoundPage cart={cart} />}>
