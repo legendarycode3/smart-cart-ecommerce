@@ -26,16 +26,20 @@ function App() {
   // }, []);
 
 
+  const loadCart = async () => {
   
-  useEffect(() => {
-      const loadCart = async () => {
     const res = await axios.get("http://localhost:3000/api/cart-items?expand=product")
     setCart(res.data);
+  
+    loadCart();
   };
 
+  
+  useEffect(() => {
+    
     loadCart();
-  }, [])
 
+  }, [])
   
 
 
@@ -44,7 +48,7 @@ function App() {
       <Route path="/" element={<HomePage cart={cart}  />}>
         {" "}
       </Route>
-      <Route path="checkout" element={<CheckoutPage cart={cart} />}>
+      <Route path="checkout" element={<CheckoutPage cart={cart} loadCart={loadCart} />}>
         {" "}
       </Route>
       <Route path="orders" element={<OrdersPage cart={cart} />}>

@@ -11,7 +11,7 @@ import "./CheckoutPage.css";
 import "./Checkout-Header.css";
 import { formatMoney } from "../utils/money";
 
-export function CheckoutPage({ cart }) {
+export function CheckoutPage({ cart, loadCart }) {
   /**
    * USING THE LIFTED STATE "cart" WHICH CAN BE ACCESSED IN ALL PAGES , INSTEAD OF USEING THE AND WRITTING THE axios.get HTTP REQUEST AGAIN
    */
@@ -148,11 +148,21 @@ export function CheckoutPage({ cart }) {
                           if (deliveryOption.priceCents > 0) {
                             priceString = `${formatMoney(deliveryOption.priceCents)} - Shipping`;
                           }
+
+                          const updateDeliveryOption = async () => {
+                             await axios.put(`http://localhost:3000/api/cart-items/${cartItem.productId}`, {
+                               deliveryOptionId: deliveryOption.id
+                             })
+
+                              await loadCart();
+                          };
+
                           return (
                             <div
                               key={deliveryOption.id}
                               className="delivery-option"
-                            >
+                            onClick={updateDeliveryOption}
+                            onChange={() => {}}>
                               <input
                                 type="radio"
                                 checked={
