@@ -1,5 +1,7 @@
 import { Link } from "react-router-dom";
 
+import { useNavigate } from "react-router-dom";
+
 import axios from "axios";
 
 import dayjs from "dayjs";
@@ -12,6 +14,10 @@ import "./Checkout-Header.css";
 import { formatMoney } from "../utils/money";
 
 export function CheckoutPage({ cart, loadCart }) {
+
+  const navigate = useNavigate();
+
+
   /**
    * USING THE LIFTED STATE "cart" WHICH CAN BE ACCESSED IN ALL PAGES , INSTEAD OF USEING THE AND WRITTING THE axios.get HTTP REQUEST AGAIN
    */
@@ -57,6 +63,17 @@ export function CheckoutPage({ cart, loadCart }) {
   cart.forEach((cartItem) => {
     totalQuantity += cartItem.quantity;
   })
+
+
+  //FOR PAYMENT SUMMARY (CREATINMG AN ORDER FOR US, ALREADY SAVED ON THE BACKEND)
+  const createOrder = async () => {
+    await axios.post('/api/orders');
+
+    await loadCart();
+
+     navigate('/orders');
+  };
+
 
   return (
     <>
@@ -204,8 +221,9 @@ export function CheckoutPage({ cart, loadCart }) {
 
 
           <div className="payment-summary">
+            
             <div className="payment-summary-title">Payment Summary</div>
-
+              
             {paymentSummarys && (
               <>
                 <div className="payment-summary-row">
@@ -243,7 +261,7 @@ export function CheckoutPage({ cart, loadCart }) {
                   </div>
                 </div>
 
-                <button className="place-order-button button-primary">
+                <button className="place-order-button button-primary" onClick={createOrder}>
                   Place your order
                 </button>
               </>
