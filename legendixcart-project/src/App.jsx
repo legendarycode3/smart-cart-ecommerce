@@ -48,7 +48,7 @@ function App() {
 
   return (
     <Routes>
-      <Route path="/" element={<HomePage cart={cart}  />}>
+      <Route path="/" element={<HomePage cart={cart} loadCart={loadCart}  />}>
         {" "}
       </Route>
       <Route path="checkout" element={<CheckoutPage cart={cart} loadCart={loadCart} />}>

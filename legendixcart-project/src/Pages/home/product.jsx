@@ -1,8 +1,31 @@
 import axios from "axios";
 import { useState } from "react";
 
-export function Product({ product }) {
+export function Product({ product, loadCart }) {
   const [quantity, setQuantity] = useState(1);
+
+
+  const[IsVisible, setIsVisble] = useState(false);
+
+
+
+  const addToCart = async () => {
+       
+      await axios.post("http://localhost:3000/api/cart-items", {
+        productId: product.id,
+        quantity: quantity,
+      });
+
+    
+      await loadCart();
+
+      setIsVisble(true);
+
+      setTimeout(() => {
+        setIsVisble(false);
+      }, 2000);
+    };
+
 
   return (
     <div key={product.id} className="product-container">
@@ -52,20 +75,15 @@ export function Product({ product }) {
 
       <div className="product-spacer"></div>
 
-      <div className="added-to-cart">
+      <div className="added-to-cart" style={{opacity: IsVisible ? 1 : 0}}>
         <img src="images/icons/checkmark.png" />
         Added
       </div>
 
       <button
         className="add-to-cart-button button-primary"
-        onClick={() => {
-          axios.post("http://localhost:3000/api/cart-items", {
-            productId: product.id,
-            quantity: quantity,
-          });
-        }}
-      >
+        onClick={addToCart}>
+
         Add to Cart
       </button>
     </div>
