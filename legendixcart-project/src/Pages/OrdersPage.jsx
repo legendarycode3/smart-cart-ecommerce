@@ -12,7 +12,7 @@ import { Header } from "../components/Header";
 import "./OrdersPage.css";
 import dayjs from "dayjs";
 
-export function OrdersPage({ cart }) {
+export function OrdersPage({ cart, loadCart }) {
   const [orders, setOrders] = useState([]);
 
   const URL = "http://localhost:3000/api/orders?expand=products";
@@ -24,15 +24,13 @@ export function OrdersPage({ cart }) {
   // }, []);
 
   useEffect(() => {
-
-    const getOrdersData = async() => {
-      const response = await axios.get(`${URL}`)
+    const getOrdersData = async () => {
+      const response = await axios.get(`${URL}`);
       setOrders(response.data);
     };
-    
+
     getOrdersData();
   }, []);
-
 
   return (
     <>
@@ -69,8 +67,18 @@ export function OrdersPage({ cart }) {
 
                 <div className="order-details-grid">
                   {order.products.map((orderProduct) => {
+
+                    const addToCart = async () => {
+                      await axios.post("/api/cart-items", {
+                        productId: orderProduct.product.id,
+                        quantity: 1,
+                      });
+
+                      await loadCart();
+                    };
+
                     return (
-                      <Fragment key={orderProduct.product.id} >
+                      <Fragment key={orderProduct.product.id}>
                         <div className="product-image-container">
                           <img src={orderProduct.product.image} />
                         </div>
@@ -80,10 +88,15 @@ export function OrdersPage({ cart }) {
                             {orderProduct.product.name}
                           </div>
                           <div className="product-delivery-date">
-                            Arriving on: {dayjs(orderProduct.estimatedDeliveryTimeMs).format("MMMM D")}
+                            Arriving on:{" "}
+                            {dayjs(orderProduct.estimatedDeliveryTimeMs).format(
+                              "MMMM D",
+                            )}
                           </div>
-                          <div className="product-quantity">Quantity: {orderProduct.quantity}</div>
-                          <button className="buy-again-button button-primary">
+                          <div className="product-quantity">
+                            Quantity: {orderProduct.quantity}
+                          </div>
+                          <button className="buy-again-button button-primary" onClick={addToCart}>
                             <img
                               className="buy-again-icon"
                               src="images/icons/buy-again.png"
@@ -95,7 +108,9 @@ export function OrdersPage({ cart }) {
                         </div>
 
                         <div className="product-actions">
-                          <a href={`/tracking/${order.id}/${orderProduct.product.id}`}>
+                          <a
+                            href={`/tracking/${order.id}/${orderProduct.product.id}`}
+                          >
                             <button className="track-package-button button-secondary">
                               Track package
                             </button>
@@ -104,14 +119,10 @@ export function OrdersPage({ cart }) {
                       </Fragment>
                     );
                   })}
-
-                  
                 </div>
               </div>
             );
           })}
-
-          
         </div>
       </div>
     </>

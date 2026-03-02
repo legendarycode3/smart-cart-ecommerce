@@ -6,15 +6,15 @@ export default defineConfig({
   plugins: [react()],
 
   
-  // server: {
-  //   proxy: {
-  //     '/api': {
-  //       target: 'http://localhost:3000'
-  //     },
-  //     '/images': {
-  //       target: 'http://localhost:3000'
-  //     }
-  //   }
-  // }
+  server: {
+    proxy: {
+      '/api': {
+        target: 'http://localhost:3000'
+      },
+      '/images': {
+        target: 'http://localhost:3000'
+      }
+    }
+  }
   
 })
