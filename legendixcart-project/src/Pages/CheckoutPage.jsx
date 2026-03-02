@@ -44,17 +44,20 @@ export function CheckoutPage({ cart, loadCart }) {
       setDeliveryOptions(res.data);
     });
   }, []);
+  
 
   const paymentSummaryURL = "http://localhost:3000/api/payment-summary";
 
   const [paymentSummarys, setPaymentSummarys] = useState(null);
+
+
 
   useEffect(() => {
     axios.get(`${paymentSummaryURL}`)
       .then((res) => {
       setPaymentSummarys(res.data);
     });
-  });
+  }, [cart]);
 
 
 
