@@ -12,6 +12,9 @@ import { NotFoundPage } from "./Pages/NotFoundPage.jsx";
 
 import "./App.css";
 
+
+window.axios = axios;
+
 function App() {
   
     const [cart, setCart] = useState([]);
