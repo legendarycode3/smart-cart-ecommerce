@@ -13,7 +13,7 @@ import "./CheckoutPage.css";
 import "./Checkout-Header.css";
 import { formatMoney } from "../utils/money";
 
-export function CheckoutPage({ cart, loadCart }) {
+export function CheckoutPage({ cart, loadCart, updateCartItem }) {
   const navigate = useNavigate();
 
   /**
@@ -74,12 +74,25 @@ export function CheckoutPage({ cart, loadCart }) {
   // FOR UPDATE BUTTON
 
   //A STATE FOR THE QUANTITY IN TEXTBOX
-  const [quantity, setQuantity] = useState(cart.quantity);
+  const [quantity, setQuantity] = useState(1);
 
   const quantityInput = (event) => {
     const quantityInputSelected = Number(event.target.value);
     setQuantity(quantityInputSelected);
   };
+
+
+
+  // OKEYDOWN BUTTON CLICK FUNCTION
+  const onKeyDownKeyboard = (event) => {
+    const keyDown = event.key;  
+    if(keyDown === 'Enter') {
+      updateCartItem();
+    } else if (keyDown === 'Escape') {
+      setQuantity(1);
+      setIsQuantityTextBoxDisplay(false);
+    }
+  }
 
   return (
     <>
@@ -180,6 +193,7 @@ export function CheckoutPage({ cart, loadCart }) {
                                 type="text"
                                 value={quantity}
                                 onChange={quantityInput}
+                                onKeyDown={onKeyDownKeyboard}
                               />
                             ) : (
                               <span className="quantity-label">
