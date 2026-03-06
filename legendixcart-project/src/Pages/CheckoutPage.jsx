@@ -14,9 +14,7 @@ import "./Checkout-Header.css";
 import { formatMoney } from "../utils/money";
 
 export function CheckoutPage({ cart, loadCart }) {
-
   const navigate = useNavigate();
-
 
   /**
    * USING THE LIFTED STATE "cart" WHICH CAN BE ACCESSED IN ALL PAGES , INSTEAD OF USEING THE AND WRITTING THE axios.get HTTP REQUEST AGAIN
@@ -44,39 +42,45 @@ export function CheckoutPage({ cart, loadCart }) {
       setDeliveryOptions(res.data);
     });
   }, []);
-  
 
   const paymentSummaryURL = "http://localhost:3000/api/payment-summary";
 
   const [paymentSummarys, setPaymentSummarys] = useState(null);
 
-
-
   useEffect(() => {
-    axios.get(`${paymentSummaryURL}`)
-      .then((res) => {
+    axios.get(`${paymentSummaryURL}`).then((res) => {
       setPaymentSummarys(res.data);
     });
   }, [cart]);
-
-
 
   let totalQuantity = 0;
 
   cart.forEach((cartItem) => {
     totalQuantity += cartItem.quantity;
-  })
-
+  });
 
   //FOR PAYMENT SUMMARY (CREATINMG AN ORDER FOR US, ALREADY SAVED ON THE BACKEND)
   const createOrder = async () => {
-    await axios.post('/api/orders');
+    await axios.post("/api/orders");
 
     await loadCart();
 
-     navigate('/orders');
+    navigate("/orders");
   };
 
+  const [isQuantityTextBoxDisplay, setIsQuantityTextBoxDisplay] =
+    useState(false);
+
+  // FOR UPDATE BUTTON
+  const updateCartItem = () => {
+    if (isQuantityTextBoxDisplay) {
+      setIsQuantityTextBoxDisplay(false);
+      // UPDATER STATE FUNTION (setIsQuantityTextBoxDisplay)
+      // INITIAL STATE FUNCTION false(isQuantityTextBoxDisplay)
+    } else {
+      setIsQuantityTextBoxDisplay(true);
+    }
+  };
 
   return (
     <>
@@ -121,12 +125,12 @@ export function CheckoutPage({ cart, loadCart }) {
                 );
 
                 const deleteCartItem = async () => {
-                  await axios.delete(`http://localhost:3000/api/cart-items/${cartItem.productId}`, {
-                     
-                  })
-                   await loadCart();
-                }
-
+                  await axios.delete(
+                    `http://localhost:3000/api/cart-items/${cartItem.productId}`,
+                    {},
+                  );
+                  await loadCart();
+                };
 
                 return (
                   <div key={cartItem.productId} className="cart-item-container">
@@ -152,15 +156,25 @@ export function CheckoutPage({ cart, loadCart }) {
                         </div>
                         <div className="product-quantity">
                           <span>
-                            Quantity:{" "}
-                            <span className="quantity-label">
-                              {cartItem.quantity}
-                            </span>
+                            Quantity:
+                            {isQuantityTextBoxDisplay ? (
+                              <input className="quantity-input" type="text" />
+                            ) : (
+                              <span className="quantity-label">
+                                {cartItem.quantity}
+                              </span>
+                            )}
                           </span>
-                          <span className="update-quantity-link link-primary">
+                          <span
+                            className="update-quantity-link link-primary"
+                            onClick={updateCartItem}
+                          >
                             Update
                           </span>
-                          <span className="delete-quantity-link link-primary" onClick={deleteCartItem}>
+                          <span
+                            className="delete-quantity-link link-primary"
+                            onClick={deleteCartItem}
+                          >
                             Delete
                           </span>
                         </div>
@@ -178,19 +192,23 @@ export function CheckoutPage({ cart, loadCart }) {
                           }
 
                           const updateDeliveryOption = async () => {
-                             await axios.put(`http://localhost:3000/api/cart-items/${cartItem.productId}`, {
-                               deliveryOptionId: deliveryOption.id
-                             })
+                            await axios.put(
+                              `http://localhost:3000/api/cart-items/${cartItem.productId}`,
+                              {
+                                deliveryOptionId: deliveryOption.id,
+                              },
+                            );
 
-                              await loadCart();
+                            await loadCart();
                           };
 
                           return (
                             <div
                               key={deliveryOption.id}
                               className="delivery-option"
-                            onClick={updateDeliveryOption}
-                            onChange={() => {}}>
+                              onClick={updateDeliveryOption}
+                              onChange={() => {}}
+                            >
                               <input
                                 type="radio"
                                 checked={
@@ -220,13 +238,9 @@ export function CheckoutPage({ cart, loadCart }) {
               })}
           </div>
 
-
-
-
           <div className="payment-summary">
-            
             <div className="payment-summary-title">Payment Summary</div>
-              
+
             {paymentSummarys && (
               <>
                 <div className="payment-summary-row">
@@ -264,7 +278,10 @@ export function CheckoutPage({ cart, loadCart }) {
                   </div>
                 </div>
 
-                <button className="place-order-button button-primary" onClick={createOrder}>
+                <button
+                  className="place-order-button button-primary"
+                  onClick={createOrder}
+                >
                   Place your order
                 </button>
               </>
