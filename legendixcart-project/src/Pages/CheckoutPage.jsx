@@ -13,7 +13,7 @@ import "./CheckoutPage.css";
 import "./Checkout-Header.css";
 import { formatMoney } from "../utils/money";
 
-export function CheckoutPage({ cart, loadCart }) {
+export function CheckoutPage({ cart, loadCart  }) {
   const navigate = useNavigate();
 
   /**
@@ -81,6 +81,15 @@ export function CheckoutPage({ cart, loadCart }) {
       setIsQuantityTextBoxDisplay(true);
     }
   };
+
+
+  //A STATE FOR THE QUANTITY IN TEXTBOX
+  const [quantity, setQuantity] = useState(cart.quantity);
+
+  const quantityInput = (event) => {
+    const quantityInputSelected = Number(event.target.value);
+    setQuantity(quantityInputSelected);
+  }
 
   return (
     <>
@@ -158,7 +167,7 @@ export function CheckoutPage({ cart, loadCart }) {
                           <span>
                             Quantity:
                             {isQuantityTextBoxDisplay ? (
-                              <input className="quantity-input" type="text" />
+                              <input className="quantity-input" type="text" value={quantity} onChange={quantityInput} />
                             ) : (
                               <span className="quantity-label">
                                 {cartItem.quantity}
