@@ -10,6 +10,7 @@ import { NavLink } from "react-router-dom";
 
 // NOW USING IT AGAIN
 import "./Header.css";
+import { useState } from "react";
 
 export function Header({cart}) {
 
@@ -29,6 +30,21 @@ export function Header({cart}) {
     totalQuantity +=  cartItem.quantity;
   });
 
+
+  // STATE FOR SEARCHINPUT-BAR
+  const [searchBar , setSearchBar] = useState("");
+
+  //CONTROL SERCH-INPUT-BAR ONCLICK ARROW FUNCTION FOR THE CHANGE ON THE INPUT TEXTBOX
+  const handleSearchInputChange = (event) => {
+    setSearchBar(event.target.value);
+  }
+
+  //CONTROL SERCH-INPUT-BAR ONCLICK ARROW FUNCTION FOR THE BUTTON
+  const handleSearchInputClick = () => {
+    console.log("The Inputed Text In The Search Bar Is:", searchBar);
+    setSearchBar("")
+  }
+
   return (
     <div className="header">
       <div className="left-section">
@@ -39,9 +55,9 @@ export function Header({cart}) {
       </div>
 
       <div className="middle-section">
-        <input className="search-bar" type="text" placeholder="Search" />
+        <input className="search-bar" type="text" placeholder="Search" value={searchBar} onChange={handleSearchInputChange} />
 
-        <button className="search-button">
+        <button className="search-button" onClick={handleSearchInputClick}>
           <img className="search-icon" src="images/icons/search-icon.png" />
           
         </button>
