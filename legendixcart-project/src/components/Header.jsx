@@ -6,13 +6,15 @@
  * IN AS MUCH AS THE HEADER FILE , IS SHARED ACCROSS ALL THE PAGE OF THE APPLICATION
  */
 
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 
 // NOW USING IT AGAIN
 import "./Header.css";
 import { useState } from "react";
 
 export function Header({cart}) {
+
+  const navigate = useNavigate();
 
   /**
    * CALCULATING THE TOTALL QUANTITY IN Cart
@@ -41,7 +43,9 @@ export function Header({cart}) {
 
   //CONTROL SERCH-INPUT-BAR ONCLICK ARROW FUNCTION FOR THE BUTTON
   const handleSearchInputClick = () => {
-    console.log("The Inputed Text In The Search Bar Is:", searchBar);
+    // console.log("The Inputed Text In The Search Bar Is:", searchBar);
+    // navigate(`/search?query=${searchBar}`);
+    navigate(`/?search=${searchBar}`);
     setSearchBar("")
   }
 
