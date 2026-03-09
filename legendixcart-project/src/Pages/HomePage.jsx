@@ -15,30 +15,43 @@ import { Product } from "./home/product";
 
 // import { formatMoney } from '../utils/money';
 
+import { useSearchParams } from "react-router-dom";
+
 
 
 export function HomePage({cart}) {
+  
+  // GETING THE SEARCH TEXT USING THIS HOOK
+    const [searchParams] = useSearchParams();
+
     /**
      * APPLYING "DATA FETCHING" BY PUTING THE URL & ALSO USING IT WITH A fetch() FUNCTION
      */
-
     const [products, setProducts] = useState([]);
 
     // const [cart , setCart] = useState([]);
 
 
  
-
-    
     const URL = 'http://localhost:3000/api/products?expand=estimatedDelivery'
 
     //const cartDataURL = 'http://localhost:3000/api/cart-items'
 
 
+     const searchQuery = searchParams.get("search");
 
 
     useEffect(() => {
+
+      const getHomeData = async () => {
+        // const response = await axios.get(`${URL}`);
+        const urlPath = searchQuery ? `http://localhost:3000/api/products?search=${searchQuery}` : 'http://localhost:3000/api/products';
+        const response = await axios.get(urlPath);
+        setProducts(response.data);
+      };
       
+      getHomeData();
+
       //FOR GETTING  THE PRODUCT DATA FROM THE BACKEND 
       /*
       fetch(`${URL}`)
@@ -52,11 +65,11 @@ export function HomePage({cart}) {
           });fetch(`${URL}`)
       */
 
-        axios.get(`${URL}`)
-          .then((res) => {
-            console.log(res.data)
-            setProducts(res.data);
-          })
+        // axios.get(`${URL}`)
+        //   .then((res) => {
+        //     console.log(res.data)
+        //     setProducts(res.data);
+        //   })
 
 
       //FOR GETTING  THE "CART DATA" FROM THE BACKEND 
@@ -68,7 +81,7 @@ export function HomePage({cart}) {
           })
         */
 
-    }, [])
+    }, [searchQuery])
 
 
 

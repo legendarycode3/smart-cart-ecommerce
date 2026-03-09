@@ -8,6 +8,8 @@
 
 import { NavLink, useNavigate } from "react-router-dom";
 
+import { useSearchParams } from "react-router-dom";
+
 // NOW USING IT AGAIN
 import "./Header.css";
 import { useState } from "react";
@@ -16,6 +18,10 @@ export function Header({cart}) {
 
   const navigate = useNavigate();
 
+
+  // GETING THE SEARCH TEXT USING THIS HOOK
+  const [searchParams] = useSearchParams();
+  
   /**
    * CALCULATING THE TOTALL QUANTITY IN Cart
    * - AND ASSIGN THE VALUE TO THE "totalQuantity"- TO USE "CART DATA" FROM THE BACKEND INSTEAD OF PLAIN HTML .... WHICH WILL BE DISPLAYED ON THE  cartQuantity
@@ -33,8 +39,12 @@ export function Header({cart}) {
   });
 
 
+  const searchQuery = searchParams.get("search");
+
   // STATE FOR SEARCHINPUT-BAR
-  const [searchBar , setSearchBar] = useState("");
+  const [searchBar , setSearchBar] = useState(searchQuery || ""); //INITIALIZE THE SEARCHBAR WITH THE VALUE FROM THE URL QUERY PARAMETER OR AN EMPTY STRING IF NOT PRESENT
+
+
 
   //CONTROL SERCH-INPUT-BAR ONCLICK ARROW FUNCTION FOR THE CHANGE ON THE INPUT TEXTBOX
   const handleSearchInputChange = (event) => {
