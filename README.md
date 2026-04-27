@@ -5,3 +5,4 @@
 * Node.js 22+ and npm
 
 ### Installation
+1. Clone the repository:
