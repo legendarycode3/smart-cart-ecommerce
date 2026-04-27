@@ -6,3 +6,4 @@
 
 ### Installation
 1. Clone the repository:
+2. Install dependencies(using the IDE terminal): `npm install` 
