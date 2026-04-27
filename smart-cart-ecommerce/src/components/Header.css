@@ -1,5 +1,5 @@
 .header {
-  background-color: rgb(8, 79, 45);
+  background-color: rgb(160, 13, 13);
   color: white;
   padding-left: 15px;
   padding-right: 15px;
@@ -39,11 +39,11 @@
 }
 
 .header .logo {
-  height: 26px;
+  height: 100px;
   margin-top: 1px;
 }
 
-.header .mobile-logo {
+.header .mobilelogo {
   display: none;
 }
 
@@ -52,9 +52,9 @@
     display: none;
   }
 
-  .header .mobile-logo {
+  .header .mobilelogo {
     display: block;
-    height: 26px;
+    height: 100px;
     margin-top: 1px;
   }
 }
@@ -81,7 +81,7 @@
 }
 
 .header .search-button {
-  background-color: rgb(186, 255, 190);
+  background-color: rgb(234, 168, 168);
   border: none;
   width: 45px;
   height: 40px;
@@ -136,7 +136,7 @@
 }
 
 .header .cart-quantity {
-  color: rgb(8, 79, 45);
+  color: rgb(160, 13, 13);
   font-size: 14px;
   font-weight: 700;
 

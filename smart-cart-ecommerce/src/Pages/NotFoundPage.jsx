@@ -1,8 +1,7 @@
-//  import { Link } from 'react-router-dom';
 
 import { Header } from "../components/Header";
 
-// import './Header.css'
+
 
 export function NotFoundPage({cart}) {
   return (

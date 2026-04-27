@@ -1,16 +1,11 @@
-// import { Link } from 'react-router-dom';
-
-
-/**
- * AM NOT SEPARATING THE HEADER FILE ON THIS PROJECT HERE..
- * IN AS MUCH AS THE HEADER FILE , IS SHARED ACCROSS ALL THE PAGE OF THE APPLICATION
- */
 
 import { NavLink, useNavigate } from "react-router-dom";
 
 import { useSearchParams } from "react-router-dom";
+import logo from "../../public/images/smartcart_icon.png";
+import mobilelogo from "../../public/images/smartcart_icon.png";
 
-// NOW USING IT AGAIN
+
 import "./Header.css";
 import { useState } from "react";
 
@@ -19,18 +14,10 @@ export function Header({cart}) {
   const navigate = useNavigate();
 
 
-  // GETING THE SEARCH TEXT USING THIS HOOK
+
   const [searchParams] = useSearchParams();
   
-  /**
-   * CALCULATING THE TOTALL QUANTITY IN Cart
-   * - AND ASSIGN THE VALUE TO THE "totalQuantity"- TO USE "CART DATA" FROM THE BACKEND INSTEAD OF PLAIN HTML .... WHICH WILL BE DISPLAYED ON THE  cartQuantity
-   */
-//  let totalQuantity = 0;
 
-//   cart?.forEach((cartItem) => {
-//     totalQuantity += cartItem.quantity; 
-//   });
   
    let totalQuantity = 0;
 
@@ -41,30 +28,28 @@ export function Header({cart}) {
 
   const searchQuery = searchParams.get("search");
 
-  // STATE FOR SEARCHINPUT-BAR
-  const [searchBar , setSearchBar] = useState(searchQuery || ""); //INITIALIZE THE SEARCHBAR WITH THE VALUE FROM THE URL QUERY PARAMETER OR AN EMPTY STRING IF NOT PRESENT
+
+  const [searchBar , setSearchBar] = useState(searchQuery || ""); 
 
 
 
-  //CONTROL SERCH-INPUT-BAR ONCLICK ARROW FUNCTION FOR THE CHANGE ON THE INPUT TEXTBOX
+
   const handleSearchInputChange = (event) => {
     setSearchBar(event.target.value);
   }
 
-  //CONTROL SERCH-INPUT-BAR ONCLICK ARROW FUNCTION FOR THE BUTTON
+
   const handleSearchInputClick = () => {
-    // console.log("The Inputed Text In The Search Bar Is:", searchBar);
-    // navigate(`/search?query=${searchBar}`);
     navigate(`/?search=${searchBar}`);
     setSearchBar("")
   }
-
+   
   return (
     <div className="header">
       <div className="left-section">
         <NavLink to="/" className="header-link">
-          <img className="logo" src="images/logo-white.png" />
-          <img className="mobile-logo" src="images/mobile-logo-white.png" />
+        <img className="logo" src={logo} />
+        <img className="mobilelogo" src={mobilelogo} />
         </NavLink>
       </div>
 

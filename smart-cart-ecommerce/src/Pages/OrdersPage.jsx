@@ -8,7 +8,7 @@ import { Link } from "react-router-dom";
 
 import { Header } from "../components/Header";
 
-// import './Header.css';
+
 import "./OrdersPage.css";
 import dayjs from "dayjs";
 
@@ -17,11 +17,7 @@ export function OrdersPage({ cart, loadCart }) {
 
   const URL = "http://localhost:3000/api/orders?expand=products";
 
-  // useEffect(() => {
-  //   axios.get(`${URL}`).then((response) => {
-  //     setOrders(response.data);
-  //   });
-  // }, []);
+
 
   useEffect(() => {
     const getOrdersData = async () => {

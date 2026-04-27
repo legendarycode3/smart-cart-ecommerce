@@ -7,7 +7,6 @@ import axios from "axios";
 import dayjs from "dayjs";
 
 import { useEffect, useState } from "react";
-// import { formatMoney } from '../utils/money';
 
 import "./CheckoutPage.css";
 import "./Checkout-Header.css";
@@ -16,20 +15,6 @@ import { formatMoney } from "../utils/money";
 export function CheckoutPage({ cart, loadCart, updateCartItem }) {
   const navigate = useNavigate();
 
-  /**
-   * USING THE LIFTED STATE "cart" WHICH CAN BE ACCESSED IN ALL PAGES , INSTEAD OF USEING THE AND WRITTING THE axios.get HTTP REQUEST AGAIN
-   */
-  //   const [cart, setCart] = useState([]);
-
-  //   const cartDataURL = "http://localhost:3000/api/cart-items";
-
-  //   useEffect(() => {
-  //     axios.get(`${cartDataURL}`).then((res) => {
-  //       console.log(res.data);
-  //       setCart(res.data);
-  //     });
-  //   }, []);
-
   const [deliveryOptions, setDeliveryOptions] = useState([]);
 
   const deliveryOptionURL =
@@ -37,8 +22,7 @@ export function CheckoutPage({ cart, loadCart, updateCartItem }) {
 
   useEffect(() => {
     axios.get(`${deliveryOptionURL}`).then((res) => {
-      // USED .then , TO WAIT FOR THE RESPONSE TO COME BACK, SO THAT ONCE WE GET THE RESPONSE , THEN WE KNOW SAVE IT ON THE "deliveryOptions" WHICH IS THE INITIAL FUNCTIOn
-      // console.log(res.data);
+     
       setDeliveryOptions(res.data);
     });
   }, []);
@@ -59,7 +43,7 @@ export function CheckoutPage({ cart, loadCart, updateCartItem }) {
     totalQuantity += cartItem.quantity;
   });
 
-  //FOR PAYMENT SUMMARY (CREATINMG AN ORDER FOR US, ALREADY SAVED ON THE BACKEND)
+
   const createOrder = async () => {
     await axios.post("/api/orders");
 
@@ -71,9 +55,7 @@ export function CheckoutPage({ cart, loadCart, updateCartItem }) {
   const [isQuantityTextBoxDisplay, setIsQuantityTextBoxDisplay] =
     useState(false);
 
-  // FOR UPDATE BUTTON
 
-  //A STATE FOR THE QUANTITY IN TEXTBOX
   const [quantity, setQuantity] = useState(1);
 
   const quantityInput = (event) => {
@@ -83,7 +65,6 @@ export function CheckoutPage({ cart, loadCart, updateCartItem }) {
 
 
 
-  // OKEYDOWN BUTTON CLICK FUNCTION
   const onKeyDownKeyboard = (event) => {
     const keyDown = event.key;  
     if(keyDown === 'Enter') {
@@ -104,8 +85,8 @@ export function CheckoutPage({ cart, loadCart, updateCartItem }) {
         <div className="header-content">
           <div className="checkout-header-left-section">
             <Link to="/">
-              <img className="logo" src="images/logo.png" />
-              <img className="mobile-logo" src="images/mobile-logo.png" />
+              
+              
             </Link>
           </div>
 
@@ -329,4 +310,3 @@ export function CheckoutPage({ cart, loadCart, updateCartItem }) {
   );
 }
 
-// export default CheckoutPage

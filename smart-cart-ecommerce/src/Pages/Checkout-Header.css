@@ -35,10 +35,7 @@
   display: none;
 }
 
-/* @media is used to create responsive design (making the
-   website look good on any screen size). This @media
-   means when the screen width is 575px or less, different
-   styles (inside the {...}) will be applied. */
+
 @media (max-width: 575px) {
   .checkout-header .checkout-header-left-section {
     width: auto;
@@ -67,7 +64,7 @@
 }
 
 .checkout-header .return-to-home-link {
-  color: rgb(25, 135, 84);
+  color:rgb(160, 13, 13);
 
   text-decoration: none;
   cursor: pointer;

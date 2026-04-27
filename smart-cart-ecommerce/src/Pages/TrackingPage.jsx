@@ -6,13 +6,11 @@ import { Link } from "react-router-dom";
 
 import { useEffect, useState } from "react";
 
-// import './Header.css';
 import "./TrackingPage.css";
 import { Header } from "../components/Header";
 import dayjs from "dayjs";
 
 export function TrackingPage({ cart }) {
-  // DESTRUCTURING
   const { orderId, productId } = useParams();
 
   const [order, setOrder] = useState(null);
@@ -27,7 +25,7 @@ export function TrackingPage({ cart }) {
     };
 
     getTrackingData();
-    //[orderId] :- THIS WILL RE-RUN useEffect  IF "orderId" CHANGES (RELOAD THE ORDER IF "orderId" CHANGES)
+   
   }, [orderId]);
 
   if (!order) {
