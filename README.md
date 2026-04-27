@@ -1,1 +1,3 @@
 ## GETTING STARTED
+
+### Prerequisites
