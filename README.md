@@ -6,4 +6,5 @@
 
 ### Installation
 1. Clone the repository:
-2. Install dependencies(using the IDE terminal): `npm install` 
+2. Install dependencies(using the IDE terminal): `npm install`
+3. Navigate to the project main folder / directory: `cd smart-cart-ecommerce` 
